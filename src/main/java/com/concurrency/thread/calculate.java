@@ -8,23 +8,28 @@ import java.util.concurrent.Semaphore;
 public class calculate {
 
     private static Semaphore semaphore = new Semaphore(1);
-    private static int num = 0;
+    private static int NUM = 0;
+    private static volatile int NUM_V = 0;
 
-    public static int add() {
-        log.info(Thread.currentThread().getName() + " add执行!");
+    public static int safeAdd() {
+        log.info(Thread.currentThread().getName() + " safeAdd执行!");
         try {
             semaphore.acquire();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        num++;
+        NUM++;
+
+        log.info(Thread.currentThread().getName() + "====>" + NUM);
         semaphore.release();
-        return num;
+        log.info(Thread.currentThread().getName() + "===release=>" + NUM);
+        return NUM;
     }
 
-    public static int safeAdd() {
+    public static int add() {
         log.info(Thread.currentThread().getName() + " add执行!");
-        num++;
-        return num;
+        NUM++;
+        log.info(Thread.currentThread().getName() + "====>" + NUM);
+        return NUM;
     }
 }
