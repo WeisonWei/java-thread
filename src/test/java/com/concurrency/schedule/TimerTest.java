@@ -1,4 +1,4 @@
-package com.concurrency.chedule;
+package com.concurrency.schedule;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
