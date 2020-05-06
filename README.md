@@ -1,13 +1,17 @@
-# thread-concurrency-java
-## 并发工具类
-thread-concurrency-java
-semaphore
-countDownLatch
-cyclicBarrier
+# thread-concurrency
+## 1.Content
+1. 线程
+2. 线程安全 - 锁
+3. 线程池
+4. 并发容器
+5. 队列
+6. 原子操作
+7. AQS&CAS
+8. 并发工具类
+9. 调度器Timer
 
-## Timer
-
-## lock
+## 1 Thread
+## 2 Thread Safe - Lock
 ### 重入锁 ReentrantLock
 在开始讲解线程池之前, 我们需要了解重入锁, 这里只是简单说明, 需要深入了解的同学可以找资料研究.
 所谓重入锁, 是指一个线程可以对同一个资源重复加锁, 为什么要这样定义? 
@@ -18,7 +22,8 @@ ReentrantLock 实现的原理是 AbstractQueuedSynchronizer, 队列同步器, �
 ReentrantLock 用 state 表示是否加锁, 0 表示没有锁, 当前线程可以持有锁, 1 表示有其他线程持有锁, 那么需要把当前线程加入到同步队列等待(这里实际是用双向链表表示队列).
 重复加锁会让 state 加一, 至于这里对 state 变量操作, 当然是用 CAS 算法操作, 这样才能保证只有一个线程可以修改成功, 也就只有一个线程可以持有锁.
 
-## threadPool
+## 3 Thread Pool
+### why thread Pool
 线程池的作用：线程池作用就是限制系统中执行线程的数量。
 根据系统的环境情况，可以自动或手动设置线程数量，达到运行的最佳效果；
 少了浪费了系统资源，多了造成系统拥挤效率不高。用线程池控制线程数量，其他线程排 队等候。一个任务执行完毕，再从队列的中取最前面的任务开始执行。
@@ -42,7 +47,7 @@ Java里面线程池的顶级接口是Executor，但是严格意义上讲Executor
 
 ![binaryTree](./src/main/image/threadPool.png "binaryTree")
 
-### threadPool
+### common used thread pool
 1. newSingleThreadExecutor
 创建一个单线程的线程池。这个线程池只有一个线程在工作，也就是相当于单线程串行执行所有任务。如果这个唯一的线程因为异常结束，那么会有一个新的线程来替代它。此线程池保证所有任务的执行顺序按照任务的提交顺序执行。
 
@@ -63,3 +68,15 @@ Java里面线程池的顶级接口是Executor，但是严格意义上讲Executor
 2. submit()有返回值，而execute()没有;
 例如，有个validation的task，希望该task执行完后告诉我它的执行结果，是成功还是失败，然后继续下面的操作。
 3. submit()可以进行Exception处理;
+
+
+## 4 Concurrency Container
+## 5 Queue
+## 6 Atomic
+## 7 AQS&CAS
+## 8 Concurrency tools
+1. semaphore
+2. countDownLatch
+3. cyclicBarrier
+
+## 9 Timer
