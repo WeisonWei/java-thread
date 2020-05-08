@@ -14,19 +14,19 @@ public class FooTimerTask extends TimerTask {
     public void run() {
 
         Thread.currentThread().setName("task-" + flag + " " + System.currentTimeMillis());
-        if (flag >= 3) {
+        if (flag > 10) {
             this.cancel();
-            this.scheduledExecutionTime();
+            //this.scheduledExecutionTime();
             return;
         }
 
         try {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        log.info(">>>>>>>>>>>" + System.currentTimeMillis());
+        log.info(">>>>>" + Thread.currentThread().getName() + ">>>>>>" + System.currentTimeMillis());
         flag++;
     }
 }
