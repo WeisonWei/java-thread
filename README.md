@@ -72,6 +72,23 @@ Java里面线程池的顶级接口是Executor，但是严格意义上讲Executor
 
 ## 4 Concurrency Container
 ## 5 Queue
+### 5.1 非阻塞队列
+1. ConcurrentHashMap
+2. ConcurrentSkipListMap
+3. ConcurrentSkipListSet
+4. ConcurrentLinkedQueue
+5. ConcurrentLinkedDeque
+6. CopyOnWriteArraySet
+
+### 5.2 阻塞队列
+1. ArrayBlockingQueue
+2. PriorityBlockingQueue
+3. LinkedBlockingQueue
+4. LinkedBlockingDeque
+5. SynchronousQueue
+6. DelayQueue
+7. LinkedTransferQueue
+
 ## 6 Atomic
 ## 7 AQS&CAS
 ## 8 Concurrency tools
