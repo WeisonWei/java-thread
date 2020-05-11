@@ -20,7 +20,7 @@ public class AtomicTest {
     @Test
     public void atomic() throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(100);
-        log.info("=====start=====" + num);
+        log.info("=====end====={}", num);
         ExecutorService executorService = Executors.newFixedThreadPool(20);
         for (int i = 1; i < 101; i++) {
             int finalI = i;
@@ -31,7 +31,7 @@ public class AtomicTest {
             });
         }
         countDownLatch.await();
-        log.info("=====end=====" + num);
+        log.info("=====end=====%d", num);
     }
 
     /**
