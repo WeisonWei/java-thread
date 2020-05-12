@@ -1,25 +1,12 @@
 package com.concurrency.blocking.queue;
 
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.junit.Test;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
-public class LinkedBlockingQueueTest {
-
-    @Test
-    public void test() {
-        BlockingQueue linkedBlockingQueue1 = new LinkedBlockingQueue(1);
-
-        val t1 = new Thread(() -> {
-            linkedBlockingQueue1.add(1);
-            System.out.println("===============");
-        }, "t1");
-
-        t1.start();
-    }
-}
+import java.util.concurrent.TimeUnit;
 
 /**
  * ArrayBlockingQueue和LinkedBlockingQueue的区别：
@@ -33,3 +20,74 @@ public class LinkedBlockingQueueTest {
  * ArrayBlockingQueue实现的队列中必须指定队列的大小；
  * LinkedBlockingQueue实现的队列中可以不指定队列的大小，但是默认是Integer.MAX_VALUE
  */
+@Slf4j
+public class LinkedBlockingQueueTest {
+
+    @Test
+    public void test() {
+        BlockingQueue linkedBlockingQueue = new LinkedBlockingQueue(1);
+        val t1 = new Thread(() -> {
+            linkedBlockingQueue.add(1);
+            System.out.println("===============");
+        }, "t1");
+
+        t1.start();
+    }
+
+    /**
+     * Collection : add reMove
+     * ================================
+     * Queue : offer poll element peek
+     * ================================
+     *
+     *
+     *
+     * 加非阻塞
+     * add 抛异常
+     *
+     * 加阻塞
+     * offer
+     * poll
+     *
+     * 取头非阻塞
+     * remove 抛异常
+     *
+     * 取头阻塞
+     *
+     *
+     * 取尾非阻塞
+     *
+     *
+     * 取尾阻塞
+     *
+     *
+     * @throws InterruptedException
+     */
+
+    @Test
+    public void testApi() throws InterruptedException {
+        BlockingQueue linkedBlockingQueue = new LinkedBlockingQueue(3);
+        linkedBlockingQueue.add(1);
+        linkedBlockingQueue.add(2);
+        linkedBlockingQueue.add(3);
+        linkedBlockingQueue.add(4);
+
+        Object remove = linkedBlockingQueue.remove();
+        log.info("=={}==", "I love U!");
+
+        //Collection
+        linkedBlockingQueue.add(1);
+        linkedBlockingQueue.remove();
+        linkedBlockingQueue.remove(1);
+        //Queue
+        linkedBlockingQueue.offer(2);
+        linkedBlockingQueue.poll(3, TimeUnit.SECONDS); //不取走会阻塞
+        linkedBlockingQueue.put(3);
+        Object element = linkedBlockingQueue.element(); //轮询拿到头部元素
+        Object poll1 = linkedBlockingQueue.poll(1, TimeUnit.SECONDS);
+        Object poll = linkedBlockingQueue.poll();//为空时再取则阻塞
+        Object peek = linkedBlockingQueue.peek();
+        log.info("=={}==", "I love U!");
+    }
+}
+
