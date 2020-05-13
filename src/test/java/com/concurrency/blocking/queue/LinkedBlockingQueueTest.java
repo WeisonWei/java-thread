@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.junit.Test;
 
+import java.util.Collection;
+import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -35,38 +37,29 @@ public class LinkedBlockingQueueTest {
     }
 
     /**
-     * Collection : add reMove
+     * Collection : add remove
      * ================================
-     * Queue : offer poll element peek
+     * Queue : add offer remove poll element peek
+     * ================================
+     * BlockingQueue : add offer(e) PUT offer(e,t,u) TAKE remove poll element peek DRAINTO CONTAINS
      * ================================
      *
-     *
-     *
-     * 加非阻塞
-     * add 抛异常
-     *
-     * 加阻塞
-     * offer
-     * poll
-     *
-     * 取头非阻塞
-     * remove 抛异常
-     *
+     * 尾加非阻塞 add[e]
+     * 尾加阻塞 put offer
+     * 取头非阻塞 take
      * 取头阻塞
-     *
-     *
      * 取尾非阻塞
-     *
-     *
      * 取尾阻塞
-     *
      *
      * @throws InterruptedException
      */
 
     @Test
     public void testApi() throws InterruptedException {
+        Collection collection = new LinkedBlockingQueue(3);
+        Queue queue = new LinkedBlockingQueue(3);
         BlockingQueue linkedBlockingQueue = new LinkedBlockingQueue(3);
+
         linkedBlockingQueue.add(1);
         linkedBlockingQueue.add(2);
         linkedBlockingQueue.add(3);
