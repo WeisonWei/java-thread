@@ -32,5 +32,6 @@ logs/
 
 ### Nodejs ###
 node_modules/
+.DS_Store
 
 pom.xml.versionsBackup
