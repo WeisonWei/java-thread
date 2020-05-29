@@ -11,6 +11,13 @@ public class CyclicBarrierTest {
     private static CountDownLatch countDownLatch = new CountDownLatch(10);
     private static CyclicBarrier barrierCallback = new CyclicBarrier(5, () -> log.info("callback@@@@@"));
 
+    /**
+     * 从字面上的意思可以知道，这个类的中文意思是“循环栅栏”。大概的意思就是一个可循环利用的屏障。
+     * 它的作用就是会让所有线程都等待完成后才会继续下一步行动。
+     *
+     * https://www.jianshu.com/p/333fd8faa56e
+     * @throws InterruptedException
+     */
     @Test
     public void cyclicBarrier() throws InterruptedException {
         ExecutorService executor = Executors.newCachedThreadPool();
