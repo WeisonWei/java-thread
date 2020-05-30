@@ -12,7 +12,7 @@ import static java.lang.Thread.yield;
 @Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ThreadPracticeTest {
+public class ThreadTest {
 
     //状态锁
     private Object lock;

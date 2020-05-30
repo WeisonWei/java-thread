@@ -1,6 +1,7 @@
 package com.thread.apis;
 
-import com.wxx.thread.impl.FightQueryTask;
+
+import com.thread.impl.FightQueryTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
