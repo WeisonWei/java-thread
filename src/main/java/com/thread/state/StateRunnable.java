@@ -13,24 +13,42 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StateRunnable implements Runnable {
+    private final Object mutex = new Object();
     private CountDownLatch countDownLatch;
-    private String threadName;
-    private final Object object = new Object();
 
     @Override
     public void run() {
-        log.info("[ " + threadName + " ]" + "开始执行");
+        log.debug("{}-[{}]" + " 开始执行", getTime(), getName());
+        printThreadName();
+        countDownLatch.countDown();
+    }
+
+    private long getTime() {
+        return System.currentTimeMillis();
+    }
+
+    private String getName() {
+        return Thread.currentThread().getName();
+    }
+
+    public synchronized void printThreadName() {
         try {
-            log.debug("Thread -run- status:{}", Thread.currentThread().getState());
-            TimeUnit.SECONDS.sleep(3);
-            printThreadName();
-            countDownLatch.countDown();
+            log.debug("{} -*[{}]*- before sleep:{}", getTime(), getName(), getState());
+            if (getName().contains("1")) {
+                wait();
+            }
+            TimeUnit.SECONDS.sleep(6);
+            log.debug("{}-[{}]==do some thing==", getTime(), getName());
+            log.debug("{} -*[{}]*- after sleep:{}", getTime(), getName(), getState());
+            if (getName().contains("2")) {
+                notifyAll();
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public synchronized void printThreadName() {
-        log.debug("==Thread:{}==", Thread.currentThread().getName());
+    private Thread.State getState() {
+        return Thread.currentThread().getState();
     }
 }
