@@ -11,12 +11,7 @@ import java.util.concurrent.CountDownLatch;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ThreadStatusTest {
 
-    private CountDownLatch countDownLatch = new CountDownLatch(1);
-
-    //状态锁
-    private Object lock;
-    //条件变量
-    private int now, need;
+    private CountDownLatch countDownLatch = new CountDownLatch(2);
 
     @Test
     @Order(1)
