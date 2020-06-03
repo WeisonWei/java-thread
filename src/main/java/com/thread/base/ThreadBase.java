@@ -1,9 +1,9 @@
 package com.thread.base;
 
-import com.wxx.thread.impl.CallAbleImpl;
-import com.wxx.thread.impl.RunnableImpl;
-import com.wxx.thread.impl.ThreadChild;
-import com.wxx.thread.runnable.*;
+import com.thread.impl.CallAbleImpl;
+import com.thread.impl.RunnableImpl;
+import com.thread.impl.ThreadChild;
+import com.thread.runnable.*;
 
 import java.util.concurrent.*;
 

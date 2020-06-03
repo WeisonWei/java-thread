@@ -1,5 +1,6 @@
 package com.commom;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,20 +13,25 @@ import java.util.concurrent.TimeUnit;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ThreadPractice extends Thread {
-
+public class StateRunnable extends Thread {
     private CountDownLatch countDownLatch;
+    private String threadName;
 
     @Override
     public void run() {
+        log.info("[ " + threadName + " ]" + "开始执行");
         try {
-            log.debug("Thread -run- status:{}",Thread.currentThread().getState());
+            log.debug("Thread -run- status:{}", Thread.currentThread().getState());
             TimeUnit.SECONDS.sleep(10);
-            log.info("线程执行中...");
-            this.wait();
+            long time = time();
+            log.debug("Thread -run- time:{}", time);
             countDownLatch.countDown();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private synchronized long time() {
+        return System.currentTimeMillis();
     }
 }
