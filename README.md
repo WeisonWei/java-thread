@@ -1,14 +1,20 @@
 # thread-concurrency
+This is a long story.
+
 ## 1.Index
-1. 线程
-2. 线程安全 - 锁
-3. 线程池
-4. 并发容器
-5. 队列
-6. 原子操作
-7. AQS&CAS
-8. 并发工具类
-9. 调度器Timer
+1. Network Protocol
+2. Linux IO
+3. Java IO
+4. JVM & GC
+5. 线程
+6. 线程安全 - 锁
+7. 线程池
+8. 并发容器
+9. 队列
+10. 原子操作
+11. AQS&CAS
+12. 并发工具类
+13. 调度器Timer
 
 ## 1 Thread
 ## 2 Thread Safe - Lock
@@ -45,7 +51,8 @@ Java里面线程池的顶级接口是Executor，但是严格意义上讲Executor
 7. Executors:是一个工厂类，提供一些静态方法返回不同类型的Executor，实现依赖ThreadPoolExecutor，说得更详细一点就是他就是return不同构造参数的ThreadPoolExecutor来实现各种线程池，不建议直接用Executors。
 
 
-![binaryTree](./src/main/image/threadPool.png "binaryTree")
+![binaryTree](./image/threadPool.png "binaryTree")
+![binaryTree](./image/thread-state.png "binaryTree")
 
 ### common used thread pool
 1. newSingleThreadExecutor
