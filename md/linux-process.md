@@ -1,3 +1,9 @@
+
+
+> https://zhuanlan.zhihu.com/p/69554144
+> https://zhuanlan.zhihu.com/p/104800026
+> https://www.zhihu.com/question/376317973
+
 1 Linux中进程的七种状态
 （1）R运行状态（runing）：并不意味着进程一定在运行中，也可以在运行队列里；
 （2）S睡眠状态（sleeping）：进程在等待事件完成；（浅度睡眠，可以被唤醒）
