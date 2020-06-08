@@ -1,5 +1,10 @@
 # thread-concurrency
 This is a long story.
+Linux - Kernel IO  
+Java-Thread - 
+Java-IO - 
+Spring -
+Dbs -   
 
 ## 1.Index
 1. Network Protocol
