@@ -11,7 +11,7 @@
 异步：调用发出后 -->  指在不能立刻得到结果之前，该函数不会阻塞当前线程;
 
 > 阻塞和同步是完全不同的概念。
-> https://blog.csdn.net/z_ryan/article/details/80873449
-> https://www.jianshu.com/p/486b0965c296
-> https://www.cnblogs.com/cyyz-le/p/10962818.html
-> https://www.cnblogs.com/bakari/p/10966303.html
+> [阻塞和同步](https://blog.csdn.net/z_ryan/article/details/80873449)
+> [阻塞和同步](https://www.jianshu.com/p/486b0965c296)
+> [阻塞和同步](https://www.cnblogs.com/cyyz-le/p/10962818.html)
+> [阻塞和同步](https://www.cnblogs.com/bakari/p/10966303.html)
