@@ -1,12 +1,21 @@
 # Thread
 
 ## 相关概念
-1. Java虚拟机的内存结构
+1. Java虚拟机内存结构
 2. Java内存模型
 3. CPU三级缓存
 3. CPU指令
 4. 可见性 
 5. 指令重排序
+
+
+    jvm 运行时内存结构 java虚拟机运行时数据区域有关
+    java 内存模型 java并发编程有关，共享内存的可见性、原子性、有序性。
+    java 对象模型 java对象的存储结构，不同对象存储在不同数据区，方法区、堆、栈。
+
+
+>https://segmentfault.com/a/1190000020206676?utm_source=tag-newest
+>https://blog.csdn.net/qq_36907589/article/details/80839385
 
 ### 1 Java虚拟机内存结构
 堆、栈、方法
