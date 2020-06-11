@@ -8,8 +8,9 @@
 5. 多核CPU之间可见性 
 6. Java虚拟机内存结构(JVM-Java Virtual Machine)
 7. Java内存模型(JMM-Java Memory Model)
-7. 类加载器
-8. 指令重排序
+8. Java对象模型(OOP-Klass Model)  OOP（Ordinary Object Pointer） 普通对象指针
+9. 类加载器
+10. 指令重排序
 
 
     jvm 运行时内存结构 java虚拟机运行时数据区域有关
@@ -33,8 +34,18 @@ JVM位置：
 > [Java虚拟机内存结构](https://www.jianshu.com/p/bf158fbb2432)
 > [Java虚拟机内存结构](https://www.jianshu.com/p/76959115d486)
 ### 2 Java内存模型
-保证多线程之间操作共享变量的正确性
+> 保证多线程之间操作共享变量的正确性
 
+在前面的关于JVM的内存结构的图中，我们可以看到，其中Java堆和方法区的区域是多个线程共享的数据区域。
+也就是说，多个线程可能可以操作保存在堆或者方法区中的同一个数据。这也就是我们常说的“Java的线程间通过共享内存进行通信”。
+
+Java内存模型是根据英文Java Memory Model（JMM）翻译过来的。其实JMM并不像JVM内存结构一样是真实存在的。
+他只是一个抽象的概念。JSR-133: Java Memory Model and Thread Specification 中描述了，JMM是和多线程相关的，他描述了一组规则或规范，这个规范定义了一个线程对共享变量的写入时对另一个线程是可见的。
+
+那么，简单总结下，Java的多线程之间是通过共享内存进行通信的，而由于采用共享内存进行通信，在通信过程中会存在一系列如可见性、原子性、顺序性等问题，而JMM就是围绕着多线程通信以及与其相关的一系列特性而建立的模型。
+JMM定义了一些语法集，这些语法集映射到Java语言中就是volatile、synchronized等关键字。
+
+在JMM中，我们把多个线程间通信的共享内存称之为主内存，而在并发编程中多个线程都维护了一个自己的本地内存（这是个抽象概念），其中保存的数据是主内存中的数据拷贝。而JMM主要是控制本地内存和主内存之间的数据交互的。
 
 > [Java内存模型](https://www.jianshu.com/p/bf158fbb2432)
 
