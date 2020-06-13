@@ -1,5 +1,10 @@
 # Java 内存管理
 
+    JVM 内存结构 java虚拟机运行时数据区域有关
+    Java 内存模型 java并发编程有关，共享内存的可见性、原子性、有序性
+    Java 对象模型 java对象的存储结构，不同对象存储在不同数据区，方法区、堆、栈
+
+
 ## 相关概念
 1. 冯·诺伊曼计算机体系
 2. CPU指令
@@ -11,11 +16,6 @@
 8. Java对象模型(OOP-Klass Model)  OOP（Ordinary Object Pointer） 普通对象指针
 9. 类加载器
 10. 指令重排序
-
-
-    jvm 运行时内存结构 java虚拟机运行时数据区域有关
-    java 内存模型 java并发编程有关，共享内存的可见性、原子性、有序性。
-    java 对象模型 java对象的存储结构，不同对象存储在不同数据区，方法区、堆、栈。
 
 > [Java虚拟机内存结构](https://segmentfault.com/a/1190000020206676?utm_source=tag-newest)
 > [Java虚拟机内存结构](https://blog.csdn.net/qq_36907589/article/details/80839385)
