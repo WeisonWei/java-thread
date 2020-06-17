@@ -27,7 +27,7 @@ Linux系统将进程的创建与目标进程的执行分成两步:
 [Linux-fork()，vfork()和clone的区别](https://blog.csdn.net/caoyan_12727/article/details/52489908)
 [Linux中fork、vfork、clone](https://zhuanlan.zhihu.com/p/59065065)
 
-## 2 JVM线程与Linux内核线程的映射(关系)
+## 3 JVM线程与Linux内核线程的映射(关系)
 
 
 
@@ -37,6 +37,6 @@ Linux系统将进程的创建与目标进程的执行分成两步:
 
 
 
-## 3 JVM线程
+## 4 JVM线程
 
 [深入理解JVM（线程部分）](https://cloud.tencent.com/developer/article/1605797)

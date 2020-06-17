@@ -1,8 +1,4 @@
-
-
-> https://zhuanlan.zhihu.com/p/69554144
-> https://zhuanlan.zhihu.com/p/104800026
-> https://www.zhihu.com/question/376317973
+# Linux 进程
 
 1 Linux中进程的七种状态
 （1）R运行状态（runing）：并不意味着进程一定在运行中，也可以在运行队列里；
@@ -12,3 +8,7 @@
 （5）X死亡状态（dead）:该状态是返回状态，在任务列表中看不到；
 （6）Z僵尸状态（zombie）:子进程退出，父进程还在运行，但是父进程没有读到子进程的退出状态，子进程进入僵尸状态；
 （7）t追踪停止状态（trancing stop）
+
+> https://zhuanlan.zhihu.com/p/69554144
+> https://zhuanlan.zhihu.com/p/104800026
+> https://www.zhihu.com/question/376317973
