@@ -25,3 +25,4 @@
 
 
 > [Java锁](https://www.cnblogs.com/linghu-java/p/8944784.html)
+> [Java对象结构](https://blog.csdn.net/zqz_zqz/article/details/70246212)
