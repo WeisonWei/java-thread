@@ -15,3 +15,4 @@
 > [阻塞和同步](https://www.jianshu.com/p/486b0965c296)
 > [阻塞和同步](https://www.cnblogs.com/cyyz-le/p/10962818.html)
 > [阻塞和同步](https://www.cnblogs.com/bakari/p/10966303.html)
+> [操作系统IO](https://juejin.im/post/5eeadd81e51d4573c91b90b0?utm_source=gold_browser_extension)
