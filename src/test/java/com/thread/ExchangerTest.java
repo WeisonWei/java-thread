@@ -1,4 +1,4 @@
-package com.concurrency.exchanger;
+package com.thread;
 
 import com.concurrency.ExchangerRunnable;
 import lombok.extern.slf4j.Slf4j;
