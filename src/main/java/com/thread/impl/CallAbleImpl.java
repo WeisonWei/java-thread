@@ -9,10 +9,9 @@ public class CallAbleImpl implements Callable {
         this.name = name;
     }
 
-    public Object call() throws Exception {
-        Thread.currentThread().setName(name + "'s implemention");
-        for (int i = 0; i < 10; i++)
-            System.out.println(Thread.currentThread().getName() + "------------");
+    public Object call() {
+        for (int i = 0; i < 2; i++)
+            System.out.println(Thread.currentThread().getName() + "--" + i + "--");
         return Thread.currentThread().getName() + "executed over~";
     }
 }
