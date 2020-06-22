@@ -34,7 +34,7 @@
         </mirror>
     </mirrors>
 
-    <!-- 配置: java8, 先从阿里云下载, 没有再去私服下载  -->
+    <!-- 配置: com.thread.java8, 先从阿里云下载, 没有再去私服下载  -->
     <!-- 20190929 hepengju 测试结果: 影响下载顺序的是profiles标签的配置顺序(后面配置的ali仓库先下载), 而不是activeProfiles的顺序 -->
     <profiles>
         <!-- 全局JDK1.8配置 -->
