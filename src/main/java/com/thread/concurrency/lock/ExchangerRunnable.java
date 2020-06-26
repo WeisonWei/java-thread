@@ -1,4 +1,4 @@
-package com.thread.concurrency;
+package com.thread.concurrency.lock;
 
 import lombok.Data;
 

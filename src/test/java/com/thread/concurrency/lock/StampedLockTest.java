@@ -16,6 +16,7 @@ public class StampedLockTest {
      */
     @Test
     public void lockTest() throws InterruptedException {
+
         CountDownLatch countDownLatch = new CountDownLatch(3);
         StampedLock stampedLock = new StampedLock();
         AtomicInteger version = new AtomicInteger(0);
