@@ -7,57 +7,222 @@ import java.util.concurrent.CountDownLatch;
 
 @Slf4j
 public class LockTest {
-    private final BankAccount bankAccount = new BankAccount(0);
 
-    /**
-     *  INFO - thread:deposit,times:90,time:1593187877441,balance:90
-     *  INFO - thread:withdraw,times:90,time:1593187877441,balance:90
-     *  INFO - thread:deposit,times:91,time:1593187877441,balance:91
-     *  INFO - thread:withdraw,times:91,time:1593187877441,balance:91
-     *  INFO - thread:deposit,times:92,time:1593187877441,balance:92
-     *  INFO - thread:withdraw,times:92,time:1593187877441,balance:92
-     *  INFO - thread:deposit,times:93,time:1593187877441,balance:93
-     *  INFO - thread:deposit,times:94,time:1593187877441,balance:94
-     *  INFO - thread:deposit,times:95,time:1593187877441,balance:95
-     *  INFO - thread:deposit,times:96,time:1593187877442,balance:96
-     *  INFO - thread:deposit,times:97,time:1593187877442,balance:97
-     *  INFO - thread:deposit,times:98,time:1593187877442,balance:98
-     *  INFO - thread:deposit,times:99,time:1593187877442,balance:99
-     *  INFO - thread:withdraw,times:93,time:1593187877443,balance:93
-     *  INFO - thread:withdraw,times:94,time:1593187877443,balance:94
-     *  INFO - thread:withdraw,times:95,time:1593187877444,balance:95
-     *  INFO - thread:withdraw,times:96,time:1593187877444,balance:96
-     *  INFO - thread:withdraw,times:97,time:1593187877444,balance:97
-     *  INFO - thread:withdraw,times:98,time:1593187877444,balance:98
-     *  INFO - thread:withdraw,times:99,time:1593187877444,balance:99
+    /*
      * @throws InterruptedException
      */
     @Test
     public void bankAccountTest() throws InterruptedException {
+        BankAccount bankAccount = new BankAccount(0);
         CountDownLatch countDownLatch = new CountDownLatch(2);
+        log.info("========bankAccountTest==========");
         //1 deposit
         new Thread(() -> {
             for (int i = 0; i < 100; i++) {
                 bankAccount.deposit(1);
-                log(i);
+                log(i, bankAccount.getBalance());
             }
-            //countDownLatch.countDown();
+            countDownLatch.countDown();
         }, "deposit").start();
 
-        //1 withdraw
+        //2 withdraw
         new Thread(() -> {
             for (int i = 0; i < 100; i++) {
                 bankAccount.withdraw(1);
-                log(i);
+                log(i, bankAccount.getBalance());
             }
-            //countDownLatch.countDown();
+            countDownLatch.countDown();
         }, "withdraw").start();
 
         countDownLatch.await();
     }
 
-    private void log(int i) {
-        log.info("thread:{},times:{},time:{},balance:{}", getName(), i, getTime(), i, bankAccount.getBalance());
+    @Test
+    public void bankAccountAtomicTest() throws InterruptedException {
+        BankAccountAtomic bankAccountAtomic = new BankAccountAtomic(0);
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+        log.info("========bankAccountAtomicTest==========");
+        //1 deposit
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountAtomic.deposit(1);
+                log(i, bankAccountAtomic.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "deposit").start();
+
+        //2 withdraw
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountAtomic.withdraw(1);
+                log(i, bankAccountAtomic.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "withdraw").start();
+
+        countDownLatch.await();
+    }
+
+    @Test
+    public void bankAccountImmutableTest() throws InterruptedException {
+        BankAccountImmutable bankAccountImmutable = new BankAccountImmutable(0);
+
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+        log.info("========bankAccountImmutableTest==========");
+        //1 deposit
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountImmutable.deposit(1);
+                log(i, bankAccountImmutable.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "deposit").start();
+
+        //2 withdraw
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountImmutable.withdraw(1);
+                log(i, bankAccountImmutable.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "withdraw").start();
+
+        countDownLatch.await();
+    }
+
+    @Test
+    public void bankAccountReentrantLockTest() throws InterruptedException {
+        BankAccountReentrantLock bankAccountReentrantLock = new BankAccountReentrantLock(0);
+
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+        log.info("========bankAccountReentrantLockTest==========");
+        //1 deposit
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountReentrantLock.deposit(1);
+                log(i, bankAccountReentrantLock.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "deposit").start();
+
+        //2 withdraw
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountReentrantLock.withdraw(1);
+                log(i, bankAccountReentrantLock.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "withdraw").start();
+
+        countDownLatch.await();
+    }
+
+    @Test
+    public void bankAccountReentrantReadWriteLockTest() throws InterruptedException {
+        BankAccountReentrantReadWriteLock bankAccountReentrantReadWriteLock = new BankAccountReentrantReadWriteLock(0);
+
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+        log.info("========bankAccountReentrantReadWriteLockTest==========");
+        //1 deposit
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountReentrantReadWriteLock.deposit(1);
+                log(i, bankAccountReentrantReadWriteLock.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "deposit").start();
+
+        //2 withdraw
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountReentrantReadWriteLock.withdraw(1);
+                log(i, bankAccountReentrantReadWriteLock.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "withdraw").start();
+
+        countDownLatch.await();
+    }
+
+    @Test
+    public void bankAccountStampedLockTest() throws InterruptedException {
+        BankAccountStampedLock bankAccountStampedLock = new BankAccountStampedLock(0);
+
+        CountDownLatch countDownLatch = new CountDownLatch(2);
+        log.info("========bankAccountStampedLockTest==========");
+        //1 deposit
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountStampedLock.deposit(1);
+                log(i, bankAccountStampedLock.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "deposit").start();
+
+        //2 withdraw
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountStampedLock.withdraw(1);
+                log(i, bankAccountStampedLock.getBalance());
+            }
+            countDownLatch.countDown();
+        }, "withdraw").start();
+
+        countDownLatch.await();
+    }
+
+    @Test
+    public void BankAccountSynchronizedTest() throws InterruptedException {
+        BankAccountSynchronized bankAccountSynchronized = new BankAccountSynchronized(0);
+
+        log.info("========BankAccountSynchronizedTest==========");
+        //1 deposit
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountSynchronized.deposit(1);
+                log(i, bankAccountSynchronized.getBalance());
+            }
+        }, "deposit").start();
+
+        //2 withdraw
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountSynchronized.withdraw(1);
+                log(i, bankAccountSynchronized.getBalance());
+            }
+        }, "withdraw").start();
+
+    }
+
+    @Test
+    public void BankAccountSynchronizedVolatileTest() throws InterruptedException {
+        BankAccountSynchronizedVolatile bankAccountSynchronizedVolatile = new BankAccountSynchronizedVolatile(0);
+
+        log.info("========BankAccountSynchronizedVolatileTest==========");
+        //1 deposit
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountSynchronizedVolatile.deposit(1);
+                log(i, bankAccountSynchronizedVolatile.getBalance());
+            }
+        }, "deposit").start();
+
+        //2 withdraw
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                bankAccountSynchronizedVolatile.withdraw(1);
+                log(i, bankAccountSynchronizedVolatile.getBalance());
+            }
+        }, "withdraw").start();
+
+    }
+
+    private void log(int i, Long balance) {
+        log.info("thread:{},times:{},time:{},balance:{}", getName(), i, getTime(), balance);
+    }
+
+    private void log(int i, String point, Long balance) {
+        log.info("thread:{},point:{},times:{},time:{},balance:{}", getName(), point, i, getTime(), balance);
     }
 
     private long getTime() {
