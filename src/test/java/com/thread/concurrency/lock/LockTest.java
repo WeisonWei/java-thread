@@ -35,6 +35,7 @@ public class LockTest {
         }, "withdraw").start();
 
         countDownLatch.await();
+        log(1000000, bankAccount.getBalance());
     }
 
     @Test
@@ -61,6 +62,7 @@ public class LockTest {
         }, "withdraw").start();
 
         countDownLatch.await();
+        log(1000000, bankAccountAtomic.getBalance());
     }
 
     @Test
@@ -88,6 +90,7 @@ public class LockTest {
         }, "withdraw").start();
 
         countDownLatch.await();
+        log(1000000, bankAccountImmutable.getBalance());
     }
 
     @Test
@@ -115,6 +118,8 @@ public class LockTest {
         }, "withdraw").start();
 
         countDownLatch.await();
+        log(1000000, bankAccountReentrantLock.getBalance());
+
     }
 
     @Test
@@ -142,12 +147,12 @@ public class LockTest {
         }, "withdraw").start();
 
         countDownLatch.await();
+        log(1000000, bankAccountReentrantReadWriteLock.getBalance());
     }
 
     @Test
     public void bankAccountStampedLockTest() throws InterruptedException {
         BankAccountStampedLock bankAccountStampedLock = new BankAccountStampedLock(0);
-
         CountDownLatch countDownLatch = new CountDownLatch(2);
         log.info("========bankAccountStampedLockTest==========");
         //1 deposit
@@ -169,11 +174,14 @@ public class LockTest {
         }, "withdraw").start();
 
         countDownLatch.await();
+        log(1000000, bankAccountStampedLock.getBalance());
+
     }
 
     @Test
     public void BankAccountSynchronizedTest() throws InterruptedException {
         BankAccountSynchronized bankAccountSynchronized = new BankAccountSynchronized(0);
+        CountDownLatch countDownLatch = new CountDownLatch(2);
 
         log.info("========BankAccountSynchronizedTest==========");
         //1 deposit
@@ -182,6 +190,7 @@ public class LockTest {
                 bankAccountSynchronized.deposit(1);
                 log(i, bankAccountSynchronized.getBalance());
             }
+            countDownLatch.countDown();
         }, "deposit").start();
 
         //2 withdraw
@@ -190,13 +199,17 @@ public class LockTest {
                 bankAccountSynchronized.withdraw(1);
                 log(i, bankAccountSynchronized.getBalance());
             }
+            countDownLatch.countDown();
         }, "withdraw").start();
 
+        countDownLatch.await();
+        log(1000000, bankAccountSynchronized.getBalance());
     }
 
     @Test
     public void BankAccountSynchronizedVolatileTest() throws InterruptedException {
         BankAccountSynchronizedVolatile bankAccountSynchronizedVolatile = new BankAccountSynchronizedVolatile(0);
+        CountDownLatch countDownLatch = new CountDownLatch(2);
 
         log.info("========BankAccountSynchronizedVolatileTest==========");
         //1 deposit
@@ -205,6 +218,7 @@ public class LockTest {
                 bankAccountSynchronizedVolatile.deposit(1);
                 log(i, bankAccountSynchronizedVolatile.getBalance());
             }
+            countDownLatch.countDown();
         }, "deposit").start();
 
         //2 withdraw
@@ -213,8 +227,11 @@ public class LockTest {
                 bankAccountSynchronizedVolatile.withdraw(1);
                 log(i, bankAccountSynchronizedVolatile.getBalance());
             }
+            countDownLatch.countDown();
         }, "withdraw").start();
 
+        countDownLatch.await();
+        log(1000000, bankAccountSynchronizedVolatile.getBalance());
     }
 
     private void log(int i, Long balance) {
