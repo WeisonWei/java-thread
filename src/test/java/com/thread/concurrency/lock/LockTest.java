@@ -1,69 +1,118 @@
 package com.thread.concurrency.lock;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 public class LockTest {
 
-    /*
-     * @throws InterruptedException
-     */
+    private AtomicInteger atomicInteger = new AtomicInteger(0);
+
     @Test
     public void bankAccountTest() throws InterruptedException {
-        BankAccount bankAccount = new BankAccount(0);
         CountDownLatch countDownLatch = new CountDownLatch(2);
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
+        BankAccount bankAccount = new BankAccount(0);
+
         log.info("========bankAccountTest==========");
         //1 deposit
         new Thread(() -> {
-            for (int i = 0; i < 100; i++) {
+            cyclicBarrierAwait(cyclicBarrier);
+            for (int i = 0; i < 10000000; i++) {
                 bankAccount.deposit(1);
-                log(i, bankAccount.getBalance());
             }
+            log(1000000000, bankAccount.getBalance());
             countDownLatch.countDown();
-        }, "deposit").start();
+        }, "deposit+").start();
 
-        //2 withdraw
+        //2 deposit
         new Thread(() -> {
-            for (int i = 0; i < 100; i++) {
-                bankAccount.withdraw(1);
-                log(i, bankAccount.getBalance());
+            cyclicBarrierAwait(cyclicBarrier);
+            for (int i = 0; i < 10000000; i++) {
+                bankAccount.deposit(1);
             }
+            log(1000000001, bankAccount.getBalance());
             countDownLatch.countDown();
-        }, "withdraw").start();
+        }, "deposit*").start();
 
         countDownLatch.await();
-        log(1000000, bankAccount.getBalance());
+        log(1000000002, bankAccount.getBalance());
+        Assertions.assertEquals(20000000L, bankAccount.getBalance());
+
+    }
+
+    @Test
+    public void bankAccountTest1() throws InterruptedException {
+        CountDownLatch countDownLatch = new CountDownLatch(200);
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(200);
+        BankAccount bankAccount = new BankAccount(0);
+
+        log.info("========bankAccountTest1==========");
+        ExecutorService pool1 = Executors.newCachedThreadPool();
+        ExecutorService pool2 = Executors.newCachedThreadPool();
+
+        for (int i = 0; i < 100; i++) {
+            pool1.execute(() -> {
+                bankAccount.deposit(1);
+                countDownLatch.countDown();
+                cyclicBarrierAwait(cyclicBarrier);
+            });
+        }
+
+        for (int i = 0; i < 100; i++) {
+            pool2.execute(() -> {
+                bankAccount.deposit(1);
+                countDownLatch.countDown();
+                cyclicBarrierAwait(cyclicBarrier);
+            });
+        }
+
+        countDownLatch.await();
+        pool1.shutdown();
+        pool2.shutdown();
+        Assertions.assertEquals(0, bankAccount.getBalance());
     }
 
     @Test
     public void bankAccountAtomicTest() throws InterruptedException {
         BankAccountAtomic bankAccountAtomic = new BankAccountAtomic(0);
         CountDownLatch countDownLatch = new CountDownLatch(2);
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
         log.info("========bankAccountAtomicTest==========");
         //1 deposit
         new Thread(() -> {
-            for (int i = 0; i < 100; i++) {
-                bankAccountAtomic.deposit(1);
-                log(i, bankAccountAtomic.getBalance());
+            cyclicBarrierAwait(cyclicBarrier);
+            for (int i = 0; i < 10000; i++) {
+                atomicInteger.getAndIncrement();
+                //bankAccountAtomic.deposit(1);
+                //log(i, bankAccountAtomic.getBalance());
             }
+            log(1000000000, Long.valueOf(atomicInteger.get()));
             countDownLatch.countDown();
-        }, "deposit").start();
+        }, "deposit+").start();
 
-        //2 withdraw
+        //2 deposit
         new Thread(() -> {
-            for (int i = 0; i < 100; i++) {
-                bankAccountAtomic.withdraw(1);
-                log(i, bankAccountAtomic.getBalance());
+            cyclicBarrierAwait(cyclicBarrier);
+            for (int i = 0; i < 10000; i++) {
+                atomicInteger.getAndIncrement();
+                //bankAccountAtomic.deposit(1);
+                //log(i, bankAccountAtomic.getBalance());
             }
+            log(1000000001, Long.valueOf(atomicInteger.get()));
             countDownLatch.countDown();
-        }, "withdraw").start();
+        }, "deposit*").start();
 
         countDownLatch.await();
-        log(1000000, bankAccountAtomic.getBalance());
+        log(1000000002, Long.valueOf(atomicInteger.get()));
+        Assertions.assertEquals(20000, Long.valueOf(atomicInteger.get()));
+
     }
+
 
     @Test
     public void bankAccountImmutableTest() throws InterruptedException {
@@ -78,7 +127,7 @@ public class LockTest {
                 log(i, bankAccountImmutable.getBalance());
             }
             countDownLatch.countDown();
-        }, "deposit").start();
+        }, "deposit+").start();
 
         //2 withdraw
         new Thread(() -> {
@@ -106,7 +155,7 @@ public class LockTest {
                 log(i, bankAccountReentrantLock.getBalance());
             }
             countDownLatch.countDown();
-        }, "deposit").start();
+        }, "deposit+").start();
 
         //2 withdraw
         new Thread(() -> {
@@ -135,7 +184,7 @@ public class LockTest {
                 log(i, bankAccountReentrantReadWriteLock.getBalance());
             }
             countDownLatch.countDown();
-        }, "deposit").start();
+        }, "deposit+").start();
 
         //2 withdraw
         new Thread(() -> {
@@ -162,7 +211,7 @@ public class LockTest {
                 log(i, bankAccountStampedLock.getBalance());
             }
             countDownLatch.countDown();
-        }, "deposit").start();
+        }, "deposit+").start();
 
         //2 withdraw
         new Thread(() -> {
@@ -182,21 +231,24 @@ public class LockTest {
     public void BankAccountSynchronizedTest() throws InterruptedException {
         BankAccountSynchronized bankAccountSynchronized = new BankAccountSynchronized(0);
         CountDownLatch countDownLatch = new CountDownLatch(2);
+        CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
 
         log.info("========BankAccountSynchronizedTest==========");
         //1 deposit
         new Thread(() -> {
+            cyclicBarrierAwait(cyclicBarrier);
             for (int i = 0; i < 100; i++) {
                 bankAccountSynchronized.deposit(1);
                 log(i, bankAccountSynchronized.getBalance());
             }
             countDownLatch.countDown();
-        }, "deposit").start();
+        }, "deposit+").start();
 
         //2 withdraw
         new Thread(() -> {
+            cyclicBarrierAwait(cyclicBarrier);
             for (int i = 0; i < 100; i++) {
-                bankAccountSynchronized.withdraw(1);
+                bankAccountSynchronized.deposit(1);
                 log(i, bankAccountSynchronized.getBalance());
             }
             countDownLatch.countDown();
@@ -219,7 +271,7 @@ public class LockTest {
                 log(i, bankAccountSynchronizedVolatile.getBalance());
             }
             countDownLatch.countDown();
-        }, "deposit").start();
+        }, "deposit+").start();
 
         //2 withdraw
         new Thread(() -> {
@@ -243,10 +295,21 @@ public class LockTest {
     }
 
     private long getTime() {
-        return System.currentTimeMillis();
+        return System.nanoTime();
     }
 
     private String getName() {
         return Thread.currentThread().getName();
+    }
+
+
+    private void cyclicBarrierAwait(CyclicBarrier cyclicBarrier) {
+        try {
+            cyclicBarrier.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (BrokenBarrierException e) {
+            e.printStackTrace();
+        }
     }
 }

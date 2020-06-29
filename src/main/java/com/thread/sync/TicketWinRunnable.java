@@ -1,5 +1,8 @@
 package com.thread.sync;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class TicketWinRunnable implements Runnable {
     private int index = 1;
     private final static int MAX = 500;
@@ -7,7 +10,7 @@ public class TicketWinRunnable implements Runnable {
     @Override
     public void run() {
         while (index <= MAX) {
-            System.out.println(Thread.currentThread().getName() + "的号码是：" + (index++));
+            System.out.println(System.nanoTime() + "--" + Thread.currentThread().getName() + "的号码是：" + (index++));
         }
     }
 
