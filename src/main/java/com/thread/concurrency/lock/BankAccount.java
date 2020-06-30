@@ -21,7 +21,7 @@ public class BankAccount {
 
     public void withdraw(long amount) {
         balance -= amount;
-        //log(balance);
+        log(balance);
     }
 
     public long getBalance() {

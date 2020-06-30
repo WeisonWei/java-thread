@@ -16,13 +16,14 @@
 
 
 
+## 线程安全
 
+> [Java线程安全](https://juejin.im/post/5d2c97bff265da1bc552954b)
 
 ## 锁🔒
 
 ### 自旋锁
 需要寻找 --> 线程自旋的消耗大于线程阻塞挂起操作的消耗的平衡点
-
 
 > [Java锁](https://www.cnblogs.com/linghu-java/p/8944784.html)
 > [Java对象结构](https://blog.csdn.net/zqz_zqz/article/details/70246212)
