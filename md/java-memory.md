@@ -132,9 +132,16 @@ Java8开始整合了两个JVM，取出老年代，新增元空间(Metaspace)；
 
 ### JVM 后台线程
 
+
+
 ### 附录
 #### javap 
 javap -c 会对当前class字节码进行反编译生成汇编代码。
 javap -v classxx，不仅会输出行号、本地变量表信息、反编译汇编代码，还会输出当前类用到的常量池等信息。
 javap -l 会输出行号和本地变量表信息。
 
+#### 偏移量
+
+valueOffset：这里指的就是value这个属性在内存中的偏移量(内存中的地址,而不是值)，
+当类被加载时先按顺序初始化static变量和static块,通过unsafe中的public native long objectFieldOffset(Field paramField);
+[偏移量](https://www.cnblogs.com/hupu-jr/p/7927635.html)

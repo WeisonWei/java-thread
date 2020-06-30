@@ -76,4 +76,17 @@ public class StampedLockTest {
 
         countDownLatch.await(15, TimeUnit.SECONDS);
     }
+
+    @Test
+    public void pointTest() {
+        Point point = new Point();
+        point.move(0, 0);
+        double v = point.distanceFromOrigin();
+        log.info("---->" + v);
+
+        point.moveIfAtOrigin(1, 3);
+        double v2 = point.distanceFromOrigin();
+
+        log.info("---->" + v2);
+    }
 }
