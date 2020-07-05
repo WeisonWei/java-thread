@@ -14,7 +14,7 @@ public class CopyOnWriteArrayListTest {
      * https://www.cnblogs.com/java-zzl/p/9783431.html
      */
     @Test
-    public void conditionTest() {
+    public void copyOnWriteTest() {
         CopyOnWriteArrayList<Integer> copyOnWriteArrayList = new CopyOnWriteArrayList();
 
         new Thread(() -> {
