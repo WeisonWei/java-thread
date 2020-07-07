@@ -1,6 +1,6 @@
 package com.thread.concurrency.lock;
 
-import com.commom.calculate;
+import com.commom.Calculate;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ public class SemaphoreTest {
 
         for (int i = 1; i < 20; i++) {
             executorPool.submit(() -> {
-                calculate.add();
+                Calculate.add();
                 countDownLatch.countDown();
             });
         }
@@ -56,7 +56,7 @@ public class SemaphoreTest {
 
         for (int i = 1; i < 20; i++) {
             executorPool.submit(() -> {
-                calculate.safeAdd();
+                Calculate.safeAdd();
                 countDownLatch.countDown();
             });
         }

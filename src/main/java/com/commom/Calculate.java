@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.Semaphore;
 
 @Slf4j
-public class calculate {
+public class Calculate {
 
     private static Semaphore semaphore = new Semaphore(1);
     private static int NUM = 0;
