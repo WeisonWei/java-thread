@@ -2,7 +2,7 @@ package com.thread.concurrency.queue.blocking;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Queue;

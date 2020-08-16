@@ -1,7 +1,7 @@
 package com.thread.concurrency.queue.blocking;
 
 import lombok.val;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.DelayQueue;
